@@ -6,22 +6,20 @@ Created on Mon Oct 12 15:54:20 2020
 @author: ssccdmx-amh
 """
 from pptx import Presentation
-
 # para imagenegenes se utiliza este modulo
 from pptx.util import Inches
 
-class ArchivosPptx():
-    
+class ArchivosPptx():    
     def primerFormato(self):
         prs = Presentation()
         tituDiapo = prs.slide_layouts[0]       
-        slide = prs.slides.add_slide(tituDiapo)
+        slide = prs.slides.add_slide(tituDiapo)        
         title = slide.shapes.title
         subtitle = slide.placeholders[1]        
         title.text = "Hola Mundo!"
         subtitle.text = "Subtitulos!"        
-        prs.save('Formato1.pptx')
-    
+        prs.save('Formato1.pptx')    
+        
     def segundoFormato(self):
         prs = Presentation()
         bullet_slide_layout = prs.slide_layouts[1]
@@ -32,7 +30,7 @@ class ArchivosPptx():
         title_shape = shapes.title
         body_shape = shapes.placeholders[1]
         
-        title_shape.text = 'Adding a Bullet Slide'
+        title_shape.text = 'Diapositiva de viñeta'
         
         tf = body_shape.text_frame
         tf.text = 'Find the bullet slide layout'
@@ -71,7 +69,7 @@ class ArchivosPptx():
         slide = prs.slides.add_slide(title_only_slide_layout)
         shapes = slide.shapes
         
-        shapes.title.text = 'Adding a Table'
+        shapes.title.text = 'Añadiendo tablas'
         
         rows = cols = 2
         left = top = Inches(2.0)
@@ -96,6 +94,7 @@ class ArchivosPptx():
         
 
 miObjeto = ArchivosPptx()
+miObjeto.primerFormato()
 miObjeto.segundoFormato()
 miObjeto.agregarImagen()
 miObjeto.crearTabla()
