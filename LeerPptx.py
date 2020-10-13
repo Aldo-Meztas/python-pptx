@@ -98,21 +98,7 @@ class ArchivosPptx():
         subtitle = slide.placeholders[1]
         subtitle.text = "subtitulo!"
         
-            
-        
-    def abrirPlantilla(self,ruta):
-        f = open(ruta)
-        prs = Presentation(ruta)        
-        self.titulo(prs,'Presentacion')                
-                
-        SLD_LAYOUT_TITLE_AND_CONTENT = 1        
-        slide_layout = prs.slide_layouts[SLD_LAYOUT_TITLE_AND_CONTENT]
-        slide = prs.slides.add_slide(slide_layout)
-        title = slide.shapes.title        
-        title.text = "Diapositiva"        
-        subtitle = slide.placeholders[1]
-        subtitle.text = "subtitulo!"
-        
+    def diseñoDiapo2(self,prs):
         # =====================================
         blank_slide_layout = prs.slide_layouts[6]
         slide = prs.slides.add_slide(blank_slide_layout)        
@@ -132,20 +118,25 @@ class ArchivosPptx():
         # p.font.size = Pt(30)
         #========================================
         img_path = 'descarga.png'             
-        # left = Inches(1)
-        # height = Inches(1)
-        print(Inches(9))
-        print('l: {}, h: {}'.format(left,height))
-        # pic = slide.shapes.add_picture(img_path, left, top, height=height)
-        
-        # left = top = Inches(1)
-        # pic = slide.shapes.add_picture(img_path, left, top)
-        
         left = Inches(1.00)
         top = Inches(1.67)
         height = Inches(2.45)
         pic = slide.shapes.add_picture(img_path, left, top, height=height)
+        # left = Inches(1)
+        # height = Inches(1)
+        # pic = slide.shapes.add_picture(img_path, left, top, height=height) 
+        # left = top = Inches(1)
+        # pic = slide.shapes.add_picture(img_path, left, top)
         
+            
+        
+    def abrirPlantilla(self,ruta):
+        f = open(ruta)
+        prs = Presentation(ruta)        
+        self.titulo(prs,'Presentacion')                
+                
+        self.diseñoDiapo1(prs)
+        self.diseñoDiapo2(prs)
         
         
 # =============================================================================
