@@ -7,21 +7,20 @@ Created on Mon Oct 12 15:54:20 2020
 """
 from pptx import Presentation
 # para imagenegenes se utiliza este modulo
-from pptx.util import Inches
+from pptx.util import Inches, Pt
+from pptx.enum.shapes import MSO_SHAPE
 
 class ArchivosPptx():    
-    def primerFormato(self):
-        prs = Presentation()
+    def titulo(self,prst,titulo):
+        prs = prst
         tituDiapo = prs.slide_layouts[0]       
         slide = prs.slides.add_slide(tituDiapo)        
-        title = slide.shapes.title
-        subtitle = slide.placeholders[1]        
-        title.text = "Hola Mundo!"
-        subtitle.text = "Subtitulos!"        
-        prs.save('Formato1.pptx')    
+        title = slide.shapes.title             
+        title.text = titulo
+         
         
-    def segundoFormato(self):
-        prs = Presentation()
+    def segundoFormato(self, prst):
+        prs = prst
         bullet_slide_layout = prs.slide_layouts[1]
         
         slide = prs.slides.add_slide(bullet_slide_layout)
@@ -42,13 +41,12 @@ class ArchivosPptx():
         p = tf.add_paragraph()
         p.text = 'Use _TextFrame.add_paragraph() for subsequent bullets'
         p.level = 2
-
-        prs.save('Formato2.pptx')
-    def agregarImagen(self):
+        
+    def agregarImagen(self,templete,pathImg):
         # Ruta de imagen
-        img_path = 'descarga.png'
+        img_path = pathImg
 
-        prs = Presentation()
+        prs = Presentation(templete)
         blank_slide_layout = prs.slide_layouts[6]
         slide = prs.slides.add_slide(blank_slide_layout)
         
@@ -58,8 +56,7 @@ class ArchivosPptx():
         left = Inches(5)
         height = Inches(5.5)
         pic = slide.shapes.add_picture(img_path, left, top, height=height)
-
-        prs.save('creacionImagen.pptx')
+        prs.save('Salida.pptx')
         
     def crearTabla(self):
         
@@ -92,9 +89,93 @@ class ArchivosPptx():
         
         prs.save('creacionTabla.pptx')
         
+    def diseñoDiapo1(self,prs):        
+        SLD_LAYOUT_TITLE_AND_CONTENT = 1        
+        slide_layout = prs.slide_layouts[SLD_LAYOUT_TITLE_AND_CONTENT]
+        slide = prs.slides.add_slide(slide_layout)
+        title = slide.shapes.title        
+        title.text = "Diapositiva"        
+        subtitle = slide.placeholders[1]
+        subtitle.text = "subtitulo!"
+        
+            
+        
+    def abrirPlantilla(self,ruta):
+        f = open(ruta)
+        prs = Presentation(ruta)        
+        self.titulo(prs,'Presentacion')                
+                
+        SLD_LAYOUT_TITLE_AND_CONTENT = 1        
+        slide_layout = prs.slide_layouts[SLD_LAYOUT_TITLE_AND_CONTENT]
+        slide = prs.slides.add_slide(slide_layout)
+        title = slide.shapes.title        
+        title.text = "Diapositiva"        
+        subtitle = slide.placeholders[1]
+        subtitle.text = "subtitulo!"
+        
+        # =====================================
+        blank_slide_layout = prs.slide_layouts[6]
+        slide = prs.slides.add_slide(blank_slide_layout)        
+        left = top = width = height = Inches(1)
+        
+        title = slide.shapes.title        
+        title.text = "Diapositiva"
+        
+        txBox = slide.shapes.add_textbox(Inches(4.07), Inches(1.93), Inches(1.82), Inches(5.54))        
+        tf = txBox.text_frame                
+        tf.text = "Esto es un parrafo de texto \n"+"Hola mundo"        
+        p = tf.add_paragraph()
+        # p.text = "This is a second paragraph that's bold"
+        # p.font.bold = True
+        # p = tf.add_paragraph()
+        # p.text = "This is a third paragraph that's big"
+        # p.font.size = Pt(30)
+        #========================================
+        img_path = 'descarga.png'             
+        # left = Inches(1)
+        # height = Inches(1)
+        print(Inches(9))
+        print('l: {}, h: {}'.format(left,height))
+        # pic = slide.shapes.add_picture(img_path, left, top, height=height)
+        
+        # left = top = Inches(1)
+        # pic = slide.shapes.add_picture(img_path, left, top)
+        
+        left = Inches(1.00)
+        top = Inches(1.67)
+        height = Inches(2.45)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+        
+        
+        
+# =============================================================================
+#         shapes = slide.shapes
+#         left = top = width = height = Inches(1.0)
+#         shape = shapes.add_shape(
+#             MSO_SHAPE.CUBE, left, top, width, height
+#         )
+# =============================================================================
+        
+# =============================================================================
+#         shape.text = 'foobar'
+# 
+#         # is equivalent to ...
+#         
+#         text_frame = shape.text_frame
+#         text_frame.clear()
+#         p = text_frame.paragraphs[0]
+#         run = p.add_run()
+#         run.text = 'foobar'
+# =============================================================================
+
+        
+        
+                
+        prs.save('Salida.pptx')    
+                
+        f.close()
+
+        
 
 miObjeto = ArchivosPptx()
-miObjeto.primerFormato()
-miObjeto.segundoFormato()
-miObjeto.agregarImagen()
-miObjeto.crearTabla()
+miObjeto.abrirPlantilla('templete.pptx')
